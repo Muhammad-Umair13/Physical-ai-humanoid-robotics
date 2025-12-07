@@ -2,46 +2,42 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Physical AI & Humanoid Robotics Textbook
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Welcome to the comprehensive textbook on Physical AI and Humanoid Robotics! This textbook is designed to provide you with a deep understanding of the fundamental concepts, technologies, and practical applications in the field of humanoid robotics.
+
+## About This Textbook
+
+This textbook is structured into four comprehensive modules:
+
+- **Module 1: ROS 2** - Learn the Robot Operating System 2, including nodes, topics, services, actions, and how to build robotic applications
+- **Module 2: Digital Twin** - Explore simulation environments with Gazebo and Unity for robotics development
+- **Module 3: AI-Robot Brain** - Understand AI integration in robotics using NVIDIA Isaac, VSLAM, navigation, and locomotion
+- **Module 4: VLA (Vision-Language-Action)** - Integrate voice commands, LLM planning, and create a capstone autonomous humanoid project
+
+## Interactive Learning
+
+This textbook features an integrated RAG (Retrieval-Augmented Generation) chatbot that allows you to select text and ask questions directly related to the content. Simply select any text in the textbook and click the floating AI Assistant button to ask questions about that specific content.
+
+## Target Audience
+
+This textbook is designed for:
+- AI and robotics students
+- Researchers in robotics and AI
+- Practitioners with a computer science or engineering background
+- Anyone interested in learning about Physical AI and humanoid robotics
+
+## Learning Approach
+
+Each module combines theoretical foundations with practical applications:
+- Detailed explanations of concepts
+- Step-by-step tutorials
+- Reproducible lab exercises
+- Code examples and best practices
+- Capstone projects that integrate concepts from multiple modules
 
 ## Getting Started
 
-Get started by **creating a new site**.
+Begin with Module 1: ROS 2 to establish the foundational knowledge needed for the subsequent modules. Each module builds upon the previous ones, but can also be studied independently for specific topics of interest.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+Let's begin your journey into the fascinating world of Physical AI and Humanoid Robotics!

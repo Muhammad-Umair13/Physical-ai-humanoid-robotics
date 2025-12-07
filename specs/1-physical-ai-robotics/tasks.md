@@ -7,26 +7,26 @@
 
 ## Phase 1: Project Setup
 
-- [ ] T001 Create project directory structure for physical-ai-humanoid-robotics textbook
-- [ ] T002 Initialize Docusaurus project for the textbook
-- [ ] T003 Set up basic configuration files (docusaurus.config.js, sidebars.js)
-- [ ] T004 Install required dependencies (FastAPI, Qdrant client, Whisper, etc.)
-- [ ] T005 Create initial .gitignore with appropriate patterns
+- [X] T001 Create project directory structure for physical-ai-humanoid-robotics textbook
+- [X] T002 Initialize Docusaurus project for the textbook
+- [X] T003 Set up basic configuration files (docusaurus.config.js, sidebars.js)
+- [X] T004 Install required dependencies (FastAPI, Qdrant client, Whisper, etc.)
+- [X] T005 Create initial .gitignore with appropriate patterns
 
 ## Phase 2: Foundational Components
 
-- [ ] T006 Create basic RAG chatbot backend structure using FastAPI
-- [ ] T007 Implement Qdrant vector store setup and configuration
-- [ ] T008 Create basic React component structure for RAG chatbot frontend
-- [ ] T009 Set up basic documentation structure for all 4 modules
-- [ ] T010 [P] Create placeholder files for all required chapters and labs
+- [X] T006 Create basic RAG chatbot backend structure using FastAPI
+- [X] T007 Implement Qdrant vector store setup and configuration
+- [X] T008 Create basic React component structure for RAG chatbot frontend
+- [X] T009 Set up basic documentation structure for all 4 modules
+- [X] T010 [P] Create placeholder files for all required chapters and labs
 
 ## Phase 3: [US1] Module 1 - ROS 2: Nodes, Topics, Services, Python agents, URDF
 
-- [ ] T011 [US1] Create introduction to ROS 2 chapter (docs/module1-ros2/01-introduction-to-ros2.md)
-- [ ] T012 [US1] Create ROS 2 architecture chapter (docs/module1-ros2/02-ros2-architecture.md)
-- [ ] T013 [US1] Create nodes, topics, services, actions chapter (docs/module1-ros2/03-nodes-topics-services-actions.md)
-- [ ] T014 [US1] Create launch files and parameters chapter (docs/module1-ros2/04-launch-files-parameters.md)
+- [X] T011 [US1] Create introduction to ROS 2 chapter (docs/module1-ros2/01-introduction-to-ros2.md)
+- [X] T012 [US1] Create ROS 2 architecture chapter (docs/module1-ros2/02-ros2-architecture.md)
+- [X] T013 [US1] Create nodes, topics, services, actions chapter (docs/module1-ros2/03-nodes-topics-services-actions.md)
+- [X] T014 [US1] Create launch files and parameters chapter (docs/module1-ros2/04-launch-files-parameters.md)
 - [ ] T015 [US1] Create Python agents chapter (docs/module1-ros2/05-python-agents.md)
 - [ ] T016 [US1] Create bridging Python with rclpy chapter (docs/module1-ros2/06-bridging-python-rclpy.md)
 - [ ] T017 [US1] Create writing and testing packages chapter (docs/module1-ros2/07-writing-testing-packages.md)
@@ -34,7 +34,7 @@
 - [ ] T019 [US1] Create humanoid URDF chapter (docs/module1-ros2/09-humanoid-urdf.md)
 - [ ] T020 [US1] Create SDF robot format chapter (docs/module1-ros2/10-sdf-robot-format.md)
 - [ ] T021 [US1] Create simple humanoid model chapter (docs/module1-ros2/11-simple-humanoid-model.md)
-- [ ] T022 [US1] Create lab1 - ROS 2 node sensor integration (docs/module1-ros2/labs/lab1-ros2-node-sensor-integration.md)
+- [X] T022 [US1] Create lab1 - ROS 2 node sensor integration (docs/module1-ros2/labs/lab1-ros2-node-sensor-integration.md)
 - [ ] T023 [US1] Create lab2 - ROS 2 architecture implementation (docs/module1-ros2/labs/lab2-architecture-implementation.md)
 - [ ] T024 [US1] Create lab3 - URDF robot creation (docs/module1-ros2/labs/lab3-urdf-robot-creation.md)
 
@@ -77,13 +77,13 @@
 
 ## Phase 7: [US2] RAG Chatbot Implementation
 
-- [ ] T053 [US2] Implement RAG backend API endpoints for text selection and querying
-- [ ] T054 [US2] Implement vector embedding and storage in Qdrant for selected text
-- [ ] T055 [US2] Implement retrieval and generation logic for chatbot responses
-- [ ] T056 [US2] Create React component for text selection and chat interface (src/components/rag-chatbot.jsx)
-- [ ] T057 [US2] Implement frontend-backend communication for RAG functionality
-- [ ] T058 [US2] Add validation to ensure chatbot only uses selected text context
-- [ ] T059 [US2] Implement error handling for out-of-context queries
+- [X] T053 [US2] Implement RAG backend API endpoints for text selection and querying
+- [X] T054 [US2] Implement vector embedding and storage in Qdrant for selected text
+- [X] T055 [US2] Implement retrieval and generation logic for chatbot responses
+- [X] T056 [US2] Create React component for text selection and chat interface (src/components/rag-chatbot.jsx)
+- [X] T057 [US2] Implement frontend-backend communication for RAG functionality
+- [X] T058 [US2] Add validation to ensure chatbot only uses selected text context
+- [X] T059 [US2] Implement error handling for out-of-context queries
 
 ## Phase 8: [US3] Capstone Project Integration
 
@@ -99,7 +99,7 @@
 - [ ] T066 Implement Urdu translation toggle per chapter (optional)
 - [ ] T067 Add images and diagrams to all chapters (static/images/, static/diagrams/)
 - [ ] T068 Implement GitHub Pages deployment configuration
-- [ ] T069 Write comprehensive README.md for the project
+- [X] T069 Write comprehensive README.md for the project
 - [ ] T070 Conduct fact verification and traceability checks
 - [ ] T071 Perform plagiarism check on all content
 - [ ] T072 Validate Flesch-Kincaid grade level (target: 10-12)
