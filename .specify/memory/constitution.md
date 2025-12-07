@@ -1,55 +1,59 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Version change:  -> 1.0.0
+List of modified principles:
+  - PRINCIPLE_1_NAME -> Accuracy
+  - PRINCIPLE_2_NAME -> Clarity
+  - PRINCIPLE_3_NAME -> Reproducibility
+  - PRINCIPLE_4_NAME -> Rigor
+Added sections:
+  - Key Standards
+  - Constraints
+Removed sections:
+  - PRINCIPLE_5, PRINCIPLE_6 (Removed placeholders due to user-defined sections)
+Templates requiring updates:
+  - .specify/templates/plan-template.md: ⚠ pending
+  - .specify/templates/spec-template.md: ⚠ pending
+  - .specify/templates/tasks-template.md: ⚠ pending
+  - .specify/templates/commands/*.md: ⚠ pending
+  - CLAUDE.md: ✅ updated (for GUIDANCE_FILE reference)
+  - README.md: ⚠ pending
+  - docs/quickstart.md: ⚠ pending
+Follow-up TODOs: None
+-->
+# Textbook on Physical AI & Humanoid Robotics with Integrated RAG Chatbot Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Accuracy
+All technical explanations, code snippets, and robotics simulations must be verified against authoritative sources (ROS 2 docs, Gazebo/Unity manuals, NVIDIA Isaac SDK guides, peer-reviewed robotics literature).
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### Clarity
+Content should be understandable by learners with a background in AI, robotics, or computer science; technical terms explained when first introduced.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### Reproducibility
+All exercises, labs, and capstone projects must be reproducible in simulation environments; all instructions fully traceable.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Rigor
+Preference for peer-reviewed sources, official documentation, and real-world robotics standards.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+## Key Standards
 
-### [PRINCIPLE_6_NAME]
+Every factual claim, algorithm, or methodology must reference a source (official documentation, academic paper, or tutorial).
+Citation format: APA style for all sources.
+Source types: minimum 50% peer-reviewed or official robotics platform documentation.
+Plagiarism: 0% tolerance; all code snippets and text must be original or properly attributed.
+Writing clarity: target Flesch-Kincaid grade 10-12 for readability.
+RAG chatbot: responses must be accurate, only use selected chapter text if provided, and cite chapter/subsection when relevant.
 
+## Constraints
 
-[PRINCIPLE__DESCRIPTION]
-
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
-
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+Word count per module: 2,500–3,500 words; total book: 10,000–12,000 words.
+Minimum 20 sources across the book (journals, official docs, tutorials).
+Format: Markdown for Docusaurus, deployable on GitHub Pages; include interactive code blocks and images.
+Labs and exercises must include step-by-step instructions, expected results, and sample code.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Constitution supersedes all other practices; Amendments require documentation, approval, migration plan; All PRs/reviews must verify compliance; Complexity must be justified; Use CLAUDE.md for runtime development guidance.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-12-06 | **Last Amended**: 2025-12-06
