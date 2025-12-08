@@ -12,10 +12,11 @@ const config: Config = {
   },
 
   // Your correct production URL
-  url: 'https://physical-ai-humanoid-robotics-textbook.vercel.app',
+  url: 'https://github.com/Muhammad-Umair13/Physical-ai-humanoid-robotics',
 
   // Vercel always uses root base URL
-  baseUrl: '/',
+  baseUrl: '/Physical-ai-humanoid-robotics/',
+
 
   // Not using GitHub Pages, so use your own repo
   organizationName: 'Muhammad-Umair13',
