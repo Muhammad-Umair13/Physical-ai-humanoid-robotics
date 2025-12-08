@@ -12,7 +12,7 @@ const config: Config = {
   },
 
   // Your correct production URL
-  url: 'https://github.com/Muhammad-Umair13/Physical-ai-humanoid-robotics',
+  url: 'https://Muhammad-Umair13.github.io',
 
   // Vercel always uses root base URL
   baseUrl: '/Physical-ai-humanoid-robotics/',
