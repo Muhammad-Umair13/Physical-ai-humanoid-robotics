@@ -14,7 +14,7 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://your-username.github.io',
+  url: 'https://physical-ai-humanoid-robotics-textbook.vercel.app',
 
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
@@ -73,7 +73,7 @@ const config: Config = {
           label: 'Textbook',
         },
         {
-          href: 'https://github.com/your-username/physical-ai-humanoid-robotics',
+          href: 'https://github.com/Muhammad-Umair13/Physical-ai-humanoid-robotics',
           label: 'GitHub',
           position: 'right',
         },
@@ -125,7 +125,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/your-username/physical-ai-humanoid-robotics',
+              href: 'https://github.com/Muhammad-Umair13/Physical-ai-humanoid-robotics',
             },
           ],
         },
