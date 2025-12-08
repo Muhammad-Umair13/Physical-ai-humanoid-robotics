@@ -2,27 +2,34 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+// This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 const config: Config = {
   title: 'Physical AI & Humanoid Robotics Textbook',
   tagline: 'Comprehensive guide to Physical AI and Humanoid Robotics with integrated RAG chatbot',
   favicon: 'img/favicon.ico',
 
-  // Docusaurus v4 future compatibility
+  // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true,
+    v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
-  // ✅ Correct Vercel deployment URL
-  url: 'https://physical-ai-humanoid-robotics-textbook.vercel.app',
-  baseUrl: '/',  // Vercel requires "/" always
+  // Set the production url of your site here
+  url: 'https://your-username.github.io',
 
-  // (Optional) For GitHub links only - safe to keep
-  organizationName: 'your-username',
-  projectName: 'physical-ai-humanoid-robotics-textbook',
+  // Set the /<baseUrl>/ pathname under which your site is served
+  // For GitHub pages deployment, it is often '/<projectName>/'
+  baseUrl: '/physical-ai-humanoid-robotics',
+
+  // GitHub pages deployment config.
+  // If you aren't using GitHub pages, you don't need these.
+  organizationName: 'your-organization', // Usually your GitHub org/user name.
+  projectName: 'physical-ai-humanoid-robotics', // Usually your repo name.
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
 
+  // Even if you don't use internationalization, you can use this field to set
+  // useful metadata like html lang. For example, if your site is Chinese, you
+  // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -34,8 +41,10 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          // Please change this to your repo.
+          // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/your-username/physical-ai-humanoid-robotics-textbook/tree/main/',
+            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -45,16 +54,15 @@ const config: Config = {
   ],
 
   themeConfig: {
+    // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
-
     colorMode: {
       respectPrefersColorScheme: true,
     },
-
     navbar: {
       title: 'Physical AI & Humanoid Robotics',
       logo: {
-        alt: 'Physical AI Logo',
+        alt: 'Physical AI & Humanoid Robotics Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -65,18 +73,17 @@ const config: Config = {
           label: 'Textbook',
         },
         {
-          href: 'https://github.com/your-username/physical-ai-humanoid-robotics-textbook',
+          href: 'https://github.com/your-username/physical-ai-humanoid-robotics',
           label: 'GitHub',
           position: 'right',
         },
       ],
     },
-
     footer: {
       style: 'dark',
       links: [
         {
-          title: 'Modules',
+          title: 'Textbook',
           items: [
             {
               label: 'Module 1: ROS 2',
@@ -99,26 +106,39 @@ const config: Config = {
         {
           title: 'Community',
           items: [
-            { label: 'Stack Overflow', href: 'https://stackoverflow.com/' },
-            { label: 'Robotics Stack Exchange', href: 'https://robotics.stackexchange.com/' },
-            { label: 'ROS Answers', href: 'https://answers.ros.org/' },
+            {
+              label: 'Stack Overflow',
+              href: 'https://stackoverflow.com/questions/tagged/ros2',
+            },
+            {
+              label: 'Robotics Stack Exchange',
+              href: 'https://robotics.stackexchange.com/',
+            },
+            {
+              label: 'ROS Answers',
+              href: 'https://answers.ros.org/questions/',
+            },
           ],
         },
         {
           title: 'More',
           items: [
-            { label: 'GitHub Repo', href: 'https://github.com/your-username/physical-ai-humanoid-robotics-textbook' },
+            {
+              label: 'GitHub',
+              href: 'https://github.com/your-username/physical-ai-humanoid-robotics',
+            },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Physical AI & Humanoid Robotics Textbook. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Physical AI & Humanoid Robotics Textbook. Built
+with Docusaurus.`,
     },
 
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
-  },
+  } satisfies Preset.ThemeConfig,
 };
 
 export default config;
