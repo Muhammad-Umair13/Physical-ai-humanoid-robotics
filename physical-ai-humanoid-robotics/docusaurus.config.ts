@@ -12,15 +12,16 @@ const config: Config = {
     v4: true,
   },
 
-  // ✅ Correct for Vercel deployment
-  url: 'https://physical-ai-humanoid-robotics-kappa-seven.vercel.app',
-  baseUrl: '/',
+  // ✅ Correct Vercel deployment URL
+  url: 'https://physical-ai-humanoid-robotics-textbook.vercel.app',
+  baseUrl: '/',  // Vercel requires "/" always
 
-  // ❗ These are optional & do nothing on Vercel, but safe to keep or remove
-  organizationName: 'your-organization',
-  projectName: 'physical-ai-humanoid-robotics',
+  // (Optional) For GitHub links only - safe to keep
+  organizationName: 'your-username',
+  projectName: 'physical-ai-humanoid-robotics-textbook',
 
   onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'warn',
 
   i18n: {
     defaultLocale: 'en',
@@ -34,7 +35,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://github.com/your-username/physical-ai-humanoid-robotics/tree/main/',
+            'https://github.com/your-username/physical-ai-humanoid-robotics-textbook/tree/main/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -45,13 +46,15 @@ const config: Config = {
 
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
+
     colorMode: {
       respectPrefersColorScheme: true,
     },
+
     navbar: {
       title: 'Physical AI & Humanoid Robotics',
       logo: {
-        alt: 'Physical AI & Humanoid Robotics Logo',
+        alt: 'Physical AI Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -62,7 +65,7 @@ const config: Config = {
           label: 'Textbook',
         },
         {
-          href: 'https://github.com/your-username/physical-ai-humanoid-robotics',
+          href: 'https://github.com/your-username/physical-ai-humanoid-robotics-textbook',
           label: 'GitHub',
           position: 'right',
         },
@@ -73,7 +76,7 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Textbook',
+          title: 'Modules',
           items: [
             {
               label: 'Module 1: ROS 2',
@@ -96,27 +99,15 @@ const config: Config = {
         {
           title: 'Community',
           items: [
-            {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/ros2',
-            },
-            {
-              label: 'Robotics Stack Exchange',
-              href: 'https://robotics.stackexchange.com/',
-            },
-            {
-              label: 'ROS Answers',
-              href: 'https://answers.ros.org/questions/',
-            },
+            { label: 'Stack Overflow', href: 'https://stackoverflow.com/' },
+            { label: 'Robotics Stack Exchange', href: 'https://robotics.stackexchange.com/' },
+            { label: 'ROS Answers', href: 'https://answers.ros.org/' },
           ],
         },
         {
           title: 'More',
           items: [
-            {
-              label: 'GitHub',
-              href: 'https://github.com/your-username/physical-ai-humanoid-robotics',
-            },
+            { label: 'GitHub Repo', href: 'https://github.com/your-username/physical-ai-humanoid-robotics-textbook' },
           ],
         },
       ],
@@ -127,7 +118,7 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
-  } satisfies Preset.ThemeConfig,
+  },
 };
 
 export default config;
