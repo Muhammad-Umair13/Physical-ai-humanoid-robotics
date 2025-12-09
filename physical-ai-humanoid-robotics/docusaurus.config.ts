@@ -12,10 +12,10 @@ const config: Config = {
   },
 
   // GitHub Pages URL
-  url: 'https://Muhammad-Umair13.github.io',
+  url: 'https://physical-ai-humanoid-robotics.pages.dev',
 
   // GitHub Pages base path
-  baseUrl: '/Physical-ai-humanoid-robotics/',
+  baseUrl: '/',
 
   // Disable broken links so build never fails
   onBrokenLinks: 'ignore',
