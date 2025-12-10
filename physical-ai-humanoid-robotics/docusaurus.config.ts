@@ -17,9 +17,9 @@ const config: Config = {
   // GitHub Pages base path
   baseUrl: '/',
 
-  // Disable broken links so build never fails
   onBrokenLinks: 'ignore',
   onBrokenMarkdownLinks: 'ignore',
+
 
   organizationName: 'Muhammad-Umair13',
   projectName: 'Physical-ai-humanoid-robotics',
@@ -44,6 +44,8 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+
+
 
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
