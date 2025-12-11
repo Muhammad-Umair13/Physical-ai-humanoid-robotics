@@ -1,87 +1,146 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from typing import List, Optional
-import uvicorn
-from qdrant_store import QdrantRAGStore
+import requests
+import xml.etree.ElementTree as ET
+import trafilatura
+from qdrant_client import QdrantClient
+from qdrant_client.models import VectorParams, Distance, PointStruct
+import cohere
 
-app = FastAPI(
-    title="RAG Chatbot API for Physical AI & Humanoid Robotics Textbook",
-    description="API for handling text selection and Q&A based on selected textbook content",
-    version="1.0.0"
+# -------------------------------------
+# CONFIG
+# -------------------------------------
+# Your Deployment Link:
+SITEMAP_URL = "https://physical-ai-humanoid-robotics.pages.dev/sitemap.xml"
+COLLECTION_NAME = "humanoid_ai_book"
+
+cohere_client = cohere.Client("y2jcwx7kVcNRMSA8LbP2V4j7OXh7dpjLLXroK9z4")
+EMBED_MODEL = "embed-english-v3.0"
+
+# Connect to Qdrant Cloud
+qdrant_client = QdrantClient(
+    url="https://172964f8-6964-4192-a4e8-aa503994ba01.us-east4-0.gcp.cloud.qdrant.io:6333", 
+    api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.W1izp9K-fkT7XEMQRGArOgFz-e1fkENQTX4r2jEo5sM",
 )
 
-# Models for request/response
-class TextSelectionRequest(BaseModel):
-    selected_text: str
-    query: str
+# -------------------------------------
+# Step 1 — Extract URLs from sitemap
+# -------------------------------------
+def get_all_urls(sitemap_url):
+    xml = requests.get(sitemap_url).text
+    root = ET.fromstring(xml)
 
-class ChatbotResponse(BaseModel):
-    response: str
-    context_used: str
+    urls = []
+    for child in root:
+        loc_tag = child.find("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")
+        if loc_tag is not None:
+            urls.append(loc_tag.text)
 
-class VectorStoreResponse(BaseModel):
-    success: bool
-    message: str
+    print("\nFOUND URLS:")
+    for u in urls:
+        print(" -", u)
 
-# Initialize the Qdrant store
-rag_store = QdrantRAGStore()
+    return urls
 
-@app.get("/")
-def read_root():
-    return {"message": "RAG Chatbot API for Physical AI & Humanoid Robotics Textbook"}
 
-@app.post("/api/text-selection/", response_model=VectorStoreResponse)
-def store_selected_text(request: TextSelectionRequest):
-    """
-    Store selected text in the vector store for later retrieval
-    """
-    try:
-        # Store the selected text in Qdrant
-        text_id = rag_store.store_text(
-            request.selected_text,
-            metadata={"query": request.query, "source": "textbook_selection"}
+# -------------------------------------
+# Step 2 — Download page + extract text
+# -------------------------------------
+def extract_text_from_url(url):
+    html = requests.get(url).text
+    text = trafilatura.extract(html)
+
+    if not text:
+        print("[WARNING] No text extracted from:", url)
+
+    return text
+
+
+# -------------------------------------
+# Step 3 — Chunk the text
+# -------------------------------------
+def chunk_text(text, max_chars=1200):
+    chunks = []
+    while len(text) > max_chars:
+        split_pos = text[:max_chars].rfind(". ")
+        if split_pos == -1:
+            split_pos = max_chars
+        chunks.append(text[:split_pos])
+        text = text[split_pos:]
+    chunks.append(text)
+    return chunks
+
+
+# -------------------------------------
+# Step 4 — Create embedding
+# -------------------------------------
+def embed(text):
+    response = cohere_client.embed(
+        model=EMBED_MODEL,
+        input_type="search_query",  # Use search_query for queries
+        texts=[text],
+    )
+    return response.embeddings[0]  # Return the first embedding
+
+
+# -------------------------------------
+# Step 5 — Store in Qdrant
+# -------------------------------------
+def create_collection():
+    print("\nCreating Qdrant collection...")
+    qdrant_client.recreate_collection(
+        collection_name=COLLECTION_NAME,
+        vectors_config=VectorParams(
+            size=1024,
+            distance=Distance.COSINE
         )
-        return VectorStoreResponse(
-            success=True,
-            message=f"Text stored successfully with ID: {text_id}"
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    )
 
-@app.post("/api/query/", response_model=ChatbotResponse)
-def query_chatbot(request: TextSelectionRequest):
-    """
-    Query the chatbot with selected text as context
-    """
-    try:
-        # First, store the selected text if it's new
-        text_id = rag_store.store_text(
-            request.selected_text,
-            metadata={"query": request.query, "source": "current_selection"}
-        )
+def save_chunk_to_qdrant(chunk, chunk_id, url):
+    vector = embed(chunk)
 
-        # Retrieve similar content from the store based on the query
-        # This simulates the RAG process: retrieve relevant context, then generate response
-        results = rag_store.retrieve_similar(request.query)
+    qdrant_client.upsert(
+        collection_name=COLLECTION_NAME,
+        points=[
+            PointStruct(
+                id=chunk_id,
+                vector=vector,
+                payload={
+                    "url": url,
+                    "text": chunk,
+                    "chunk_id": chunk_id
+                }
+            )
+        ]
+    )
 
-        if results:
-            # Use the most relevant text as context
-            context_text = results[0]["text"]
-            response = f"Based on the textbook content: '{context_text[:200]}...', I can answer your query: '{request.query}'. The system has found relevant information to address your question about this Physical AI and Humanoid Robotics topic."
-        else:
-            # If no similar content found, respond accordingly
-            response = f"I've stored your selected text: '{request.selected_text[:100]}...'. However, I couldn't find directly relevant content to answer your specific query: '{request.query}'. Please make sure your query relates to the selected text or try rephrasing."
 
-        return ChatbotResponse(
-            response=response,
-            context_used=request.selected_text
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/health")
-def health_check():
-    return {"status": "healthy", "service": "RAG Chatbot API"}
+# -------------------------------------
+# MAIN INGESTION PIPELINE
+# -------------------------------------
+def ingest_book():
+    urls = get_all_urls(SITEMAP_URL)
+
+    create_collection()
+
+    global_id = 1
+
+    for url in urls:
+        print("\nProcessing:", url)
+        text = extract_text_from_url(url)
+
+        if not text:
+            continue
+
+        chunks = chunk_text(text)
+
+        for ch in chunks:
+            save_chunk_to_qdrant(ch, global_id, url)
+            print(f"Saved chunk {global_id}")
+            global_id += 1
+
+    print("\n✔️ Ingestion completed!")
+    print("Total chunks stored:", global_id - 1)
+
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    ingest_book()
