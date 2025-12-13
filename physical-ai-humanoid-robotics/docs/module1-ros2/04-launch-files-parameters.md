@@ -1,4 +1,4 @@
-<!-- ---
+---
 sidebar_label: 'Launch Files and Parameters'
 sidebar_position: 4
 ---
@@ -390,4 +390,4 @@ nao_config:
 
 ## Summary
 
-Launch files and parameters are essential tools for managing complex robotic systems. They allow you to configure and start multiple nodes with a single command, making it easier to manage humanoid robotics applications. Proper use of these tools leads to more maintainable and configurable robotic systems. -->
+Launch files and parameters are essential tools for managing complex robotic systems. They allow you to configure and start multiple nodes with a single command, making it easier to manage humanoid robotics applications. Proper use of these tools leads to more maintainable and configurable robotic systems.

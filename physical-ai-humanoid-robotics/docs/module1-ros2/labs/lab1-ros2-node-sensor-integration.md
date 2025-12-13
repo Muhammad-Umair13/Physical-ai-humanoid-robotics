@@ -1,4 +1,4 @@
-<!-- ---
+---
 sidebar_label: 'Lab 1: ROS 2 Node Sensor Integration'
 sidebar_position: 1
 ---
@@ -441,4 +441,4 @@ In this lab, you've created a complete sensor integration system using ROS 2's p
 - Use launch files to coordinate multiple nodes
 - Test your system with ROS 2 tools
 
-This foundation is essential for building more complex humanoid robotics applications. -->
+This foundation is essential for building more complex humanoid robotics applications.
