@@ -1,146 +1,49 @@
+# main.py
+from fastapi import FastAPI
+from pydantic import BaseModel
 import requests
-import xml.etree.ElementTree as ET
-import trafilatura
-from qdrant_client import QdrantClient
-from qdrant_client.models import VectorParams, Distance, PointStruct
-import cohere
+from fastapi.middleware.cors import CORSMiddleware
 
-# -------------------------------------
-# CONFIG
-# -------------------------------------
-# Your Deployment Link:
-SITEMAP_URL = "https://physical-ai-humanoid-robotics.pages.dev/sitemap.xml"
-COLLECTION_NAME = "humanoid_ai_book"
+WEBHOOK_URL = "https://muhamadumair.app.n8n.cloud/webhook/chatbot"
 
-cohere_client = cohere.Client("y2jcwx7kVcNRMSA8LbP2V4j7OXh7dpjLLXroK9z4")
-EMBED_MODEL = "embed-english-v3.0"
+app = FastAPI()
 
-# Connect to Qdrant Cloud
-qdrant_client = QdrantClient(
-    url="https://172964f8-6964-4192-a4e8-aa503994ba01.us-east4-0.gcp.cloud.qdrant.io:6333", 
-    api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.W1izp9K-fkT7XEMQRGArOgFz-e1fkENQTX4r2jEo5sM",
+# Allow CORS so frontend can call backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For production, restrict to your domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# -------------------------------------
-# Step 1 — Extract URLs from sitemap
-# -------------------------------------
-def get_all_urls(sitemap_url):
-    xml = requests.get(sitemap_url).text
-    root = ET.fromstring(xml)
+class Question(BaseModel):
+    prompt: str
 
-    urls = []
-    for child in root:
-        loc_tag = child.find("{http://www.sitemaps.org/schemas/sitemap/0.9}loc")
-        if loc_tag is not None:
-            urls.append(loc_tag.text)
-
-    print("\nFOUND URLS:")
-    for u in urls:
-        print(" -", u)
-
-    return urls
-
-
-# -------------------------------------
-# Step 2 — Download page + extract text
-# -------------------------------------
-def extract_text_from_url(url):
-    html = requests.get(url).text
-    text = trafilatura.extract(html)
-
-    if not text:
-        print("[WARNING] No text extracted from:", url)
-
-    return text
-
-
-# -------------------------------------
-# Step 3 — Chunk the text
-# -------------------------------------
-def chunk_text(text, max_chars=1200):
-    chunks = []
-    while len(text) > max_chars:
-        split_pos = text[:max_chars].rfind(". ")
-        if split_pos == -1:
-            split_pos = max_chars
-        chunks.append(text[:split_pos])
-        text = text[split_pos:]
-    chunks.append(text)
-    return chunks
-
-
-# -------------------------------------
-# Step 4 — Create embedding
-# -------------------------------------
-def embed(text):
-    response = cohere_client.embed(
-        model=EMBED_MODEL,
-        input_type="search_query",  # Use search_query for queries
-        texts=[text],
-    )
-    return response.embeddings[0]  # Return the first embedding
-
-
-# -------------------------------------
-# Step 5 — Store in Qdrant
-# -------------------------------------
-def create_collection():
-    print("\nCreating Qdrant collection...")
-    qdrant_client.recreate_collection(
-        collection_name=COLLECTION_NAME,
-        vectors_config=VectorParams(
-            size=1024,
-            distance=Distance.COSINE
+@app.post("/ask")
+def ask_question(q: Question):
+    try:
+        response = requests.post(
+            WEBHOOK_URL,
+            json={"prompt": q.prompt},
+            timeout=60
         )
-    )
+        response.raise_for_status()
+        
+        # Parse n8n response
+        try:
+            data = response.json()
+            if isinstance(data, list):
+                first_item = data[0].get("json", {})
+                answer = first_item.get("answer", "")
+            else:
+                answer = data.get("answer", "")
+        except ValueError:
+            answer = response.text
 
-def save_chunk_to_qdrant(chunk, chunk_id, url):
-    vector = embed(chunk)
+        if not answer:
+            return {"answer": "No response from n8n."}
+        return {"answer": answer}
 
-    qdrant_client.upsert(
-        collection_name=COLLECTION_NAME,
-        points=[
-            PointStruct(
-                id=chunk_id,
-                vector=vector,
-                payload={
-                    "url": url,
-                    "text": chunk,
-                    "chunk_id": chunk_id
-                }
-            )
-        ]
-    )
-
-
-
-# -------------------------------------
-# MAIN INGESTION PIPELINE
-# -------------------------------------
-def ingest_book():
-    urls = get_all_urls(SITEMAP_URL)
-
-    create_collection()
-
-    global_id = 1
-
-    for url in urls:
-        print("\nProcessing:", url)
-        text = extract_text_from_url(url)
-
-        if not text:
-            continue
-
-        chunks = chunk_text(text)
-
-        for ch in chunks:
-            save_chunk_to_qdrant(ch, global_id, url)
-            print(f"Saved chunk {global_id}")
-            global_id += 1
-
-    print("\n✔️ Ingestion completed!")
-    print("Total chunks stored:", global_id - 1)
-
-
-if __name__ == "__main__":
-    ingest_book()
+    except requests.exceptions.RequestException as e:
+        return {"answer": f"Error contacting n8n: {e}"}
