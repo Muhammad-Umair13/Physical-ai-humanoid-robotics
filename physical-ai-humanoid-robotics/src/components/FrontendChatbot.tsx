@@ -26,7 +26,7 @@ const FrontendChatbot = () => {
 
     try {
       // Send question to Python backend
-      const res = await fetch('http://localhost:8000/ask', {
+      const res = await fetch('https://muhamadumair.app.n8n.cloud/webhook/chatbot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: inputValue })
